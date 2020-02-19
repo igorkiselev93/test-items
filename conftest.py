@@ -4,13 +4,13 @@ from selenium.webdriver.chrome.options import Options
 
 def pytest_addoption(parser):
     parser.addoption('--language', action='store', default=None,
-                     help="Choose language: Spanish (es) or French (fr)")
+                     help="Choose language. For example: es (Spanish) or fr (French)")
 
 @pytest.fixture(scope="function")
 def browser(request):
-    language = request.config.getoption("language")
+    user_language = request.config.getoption("language")
     options = Options()
-    options.add_experimental_option('prefs', {'intl.accept_languages': language})
+    options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
     browser = webdriver.Chrome(options=options)
     yield browser
     browser.quit()
